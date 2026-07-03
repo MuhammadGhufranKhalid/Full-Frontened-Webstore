@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.jsx";
 import { FavoritesProvider } from "./context/FavoritesContext";
@@ -11,8 +11,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <AuthProvider><RecipeFiltersProvider><FavoritesProvider><App /><ToastContainer position="top-right" autoClose={2800} /></FavoritesProvider></RecipeFiltersProvider></AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 );
