@@ -1,8 +1,9 @@
 // src/components/Navbar.jsx
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Search, Heart, Menu, X, ChefHat } from "lucide-react";
+import { Search, Heart, Menu, X, ChefHat, LayoutDashboard, LogIn } from "lucide-react";
 import { useFavorites } from "../context/FavoritesContext";
+import { useAuth } from "../context/AuthContext";
 
 const LINKS = [
   { to: "/categories", label: "Categories" },
@@ -13,6 +14,7 @@ export default function Navbar() {
   const [query, setQuery] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const { favorites } = useFavorites();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   function handleSearch(e) {
@@ -77,6 +79,10 @@ export default function Navbar() {
               </span>
             )}
           </Link>
+          <Link to={isAuthenticated ? "/admin" : "/login"} className="flex h-10 items-center gap-2 rounded-full border border-line px-3 text-sm font-medium text-charcoal-soft hover:border-paprika hover:text-paprika">
+            {isAuthenticated ? <LayoutDashboard className="h-4 w-4" /> : <LogIn className="h-4 w-4" />}
+            <span className="hidden lg:inline">{isAuthenticated ? "Dashboard" : "Login"}</span>
+          </Link>
         </div>
 
         <button
@@ -125,6 +131,9 @@ export default function Navbar() {
             >
               <Heart className="h-4 w-4" />
               Saved ({favorites.length})
+            </Link>
+            <Link to={isAuthenticated ? "/admin" : "/login"} onClick={() => setMobileOpen(false)} className="flex items-center gap-2 text-sm font-medium text-charcoal-soft">
+              {isAuthenticated ? <LayoutDashboard className="h-4 w-4" /> : <LogIn className="h-4 w-4" />}{isAuthenticated ? "Dashboard" : "Login"}
             </Link>
           </div>
         </div>

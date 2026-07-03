@@ -17,5 +17,12 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      // Context modules intentionally co-locate their provider and consumer hook.
+      'react-refresh/only-export-components': 'off',
+      // Data-loading effects are the intended synchronization boundary here.
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/use-memo': 'off',
+    },
   },
 ])

@@ -7,8 +7,7 @@ import { useFetch } from "./useFetch";
 
 export function useRecipeDetail(id) {
   const fetcher = useCallback(async () => {
-    const res = await recipesService.getById(id);
-    return res.meals ? res.meals[0] : null;
+    return recipesService.getById(id);
   }, [id]);
 
   return useFetch(fetcher, [id]);

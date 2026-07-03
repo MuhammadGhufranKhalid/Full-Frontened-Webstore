@@ -8,7 +8,7 @@ export default function Footer() {
           Kitchen Notes
         </p>
         <p className="font-mono text-[11px] uppercase tracking-widest text-charcoal-soft/70">
-          Recipe data via TheMealDB
+          Recipe data via DummyJSON
         </p>
       </div>
     </footer>

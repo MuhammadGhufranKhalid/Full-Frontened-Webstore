@@ -5,15 +5,14 @@ import "./index.css";
 import App from "./App.jsx";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { RecipeFiltersProvider } from "./context/RecipeFiltersContext";
+import { AuthProvider } from "./context/AuthContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <RecipeFiltersProvider>
-        <FavoritesProvider>
-          <App />
-        </FavoritesProvider>
-      </RecipeFiltersProvider>
+      <AuthProvider><RecipeFiltersProvider><FavoritesProvider><App /><ToastContainer position="top-right" autoClose={2800} /></FavoritesProvider></RecipeFiltersProvider></AuthProvider>
     </BrowserRouter>
   </StrictMode>
 );

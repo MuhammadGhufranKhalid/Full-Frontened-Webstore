@@ -121,7 +121,7 @@ export default function RecipeDetailPage() {
             {ingredients.map((ing) => (
               <li key={ing.id} className="flex items-center gap-3">
                 <img
-                  src={getIngredientThumb(ing.name)}
+                  src={meal.image || getIngredientThumb(ing.name)}
                   alt={ing.name}
                   loading="lazy"
                   className="h-9 w-9 shrink-0 rounded-lg bg-cream-dim object-cover"

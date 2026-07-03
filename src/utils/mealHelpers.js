@@ -6,6 +6,9 @@
 
 export function getIngredientList(meal) {
   if (!meal) return [];
+  if (Array.isArray(meal.ingredients)) {
+    return meal.ingredients.map((name, index) => ({ id: index + 1, name, measure: meal.servings ? `Serves ${meal.servings}` : "" }));
+  }
   const ingredients = [];
 
   for (let i = 1; i <= 20; i++) {
@@ -27,10 +30,11 @@ export function getIngredientList(meal) {
 // instructions sometimes use \r\n, sometimes numbered "1. " prefixes,
 // sometimes just paragraphs — this handles the common cases.
 export function getInstructionSteps(instructions = "") {
+  if (Array.isArray(instructions)) return instructions.filter(Boolean);
   const cleaned = instructions
     .replace(/\r\n/g, "\n")
     .split(/\n+/)
-    .map((line) => line.replace(/^\d+[\.\)]\s*/, "").trim())
+    .map((line) => line.replace(/^\d+[.)]\s*/, "").trim())
     .filter(Boolean);
 
   return cleaned.length > 0 ? cleaned : [instructions];

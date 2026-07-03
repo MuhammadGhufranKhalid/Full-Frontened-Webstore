@@ -1,39 +1,18 @@
-// src/api/client.js
-// Central fetch wrapper for TheMealDB. Every service file routes through
-// this so the base URL and error handling only live in one place.
+import axios from "axios";
 
-const BASE_URL = "https://www.themealdb.com/api/json/v1/1";
+export const apiClient = axios.create({
+  baseURL: "https://dummyjson.com",
+  timeout: 12000,
+  headers: { "Content-Type": "application/json" },
+});
 
-class ApiError extends Error {
-  constructor(message, status) {
-    super(message);
-    this.name = "ApiError";
-    this.status = status;
-  }
-}
+apiClient.interceptors.request.use((config) => {
+  const session = JSON.parse(localStorage.getItem("kitchen-notes:auth") || "null");
+  if (session?.accessToken) config.headers.Authorization = `Bearer ${session.accessToken}`;
+  return config;
+});
 
-async function request(path) {
-  const url = `${BASE_URL}${path}`;
-
-  let response;
-  try {
-    response = await fetch(url);
-  } catch (networkErr) {
-    throw new ApiError("Network error — check your connection.", 0);
-  }
-
-  if (!response.ok) {
-    throw new ApiError(
-      `Request failed: ${response.status} ${response.statusText}`,
-      response.status
-    );
-  }
-
-  return response.json();
-}
-
-export const apiClient = {
-  get: (path) => request(path),
-};
-
-export { ApiError };
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject(new Error(error.response?.data?.message || error.message || "Request failed.")),
+);

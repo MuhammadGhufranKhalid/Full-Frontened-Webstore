@@ -1,0 +1,3 @@
+import ResourceTable from "../../components/admin/ResourceTable";
+import { recipesService } from "../../api/recipesService";
+export default function RecipesAdminPage(){return <ResourceTable title="Recipes" description="Create, search, update, and remove recipes." load={async()=>{const r=await recipesService.getAll({limit:30});return r.recipes;}} createItem={recipesService.create} updateItem={recipesService.update} deleteItem={recipesService.remove} emptyItem={{name:"",cuisine:"",difficulty:"Easy",image:""}} columns={[{key:"name",label:"Name"},{key:"cuisine",label:"Cuisine"},{key:"difficulty",label:"Difficulty"},{key:"image",label:"Image URL"}]}/>}
